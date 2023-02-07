@@ -18,7 +18,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       playground:false,
-      introspection:process.env.STATE!=='prod',
+      cors:{
+        origin:'*',
+
+      },
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
 
