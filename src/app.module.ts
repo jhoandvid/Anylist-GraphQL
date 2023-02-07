@@ -21,8 +21,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         credentials: true,
         origin: '*',
       },
-      playground:true,
-      //plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      //playground:true,
+      
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
 
 
