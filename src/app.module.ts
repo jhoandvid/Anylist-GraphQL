@@ -23,7 +23,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 
     TypeOrmModule.forRoot({
+
+
+
       type: 'postgres',
+      ssl:(process.env.STATE==='prod')?{rejectUnauthorized:false, sslmode:'require'}:false as any,
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
       username: process.env.DB_USERNAME,
@@ -41,4 +45,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+
+  constructor(){
+    console.log(process.env.STATE)
+    console.log(process.env.DB_HOST)
+    console.log(process.env.DB_PORT)
+    console.log(process.env.DB_USERNAME)
+    console.log(process.env.DB_PASSWORD)
+    console.log(process.env.DB_NAME)
+    console.log(process.env.PORT)
+
+
+
+  }
+
+}
