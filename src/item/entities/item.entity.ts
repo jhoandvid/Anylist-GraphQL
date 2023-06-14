@@ -1,31 +1,42 @@
 import { ObjectType, Field, Int, ID, Float } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import {
+  Column,
+  Entity,
+  Index,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-
-@Entity({name:'items'})
+@Entity({ name: 'items' })
 @ObjectType()
 export class Item {
-  
-  
   @PrimaryGeneratedColumn('uuid')
-  @Field(()=>ID)
-  id:string
+  @Field(() => ID)
+  id: string;
 
   @Column()
-  @Field(()=>String)
-  name:string;
+  @Field(() => String)
+  name: string;
 
+  @Column('bool', { default: true })
+  @Field(() => Boolean, { nullable: true })
+  isActive: boolean;
 
-  @Column('bool', {default:true})
-  @Field(()=>Boolean, {nullable:true})
-  isActive:boolean
+  /* @Column('float')
+  @Field(() => Float)
+  quantity: number;
+ */
+  @Column({ nullable: true })
+  @Field(() => String, { nullable: true })
+  quantityUnits?: string; // g,ml, kg, tsp
 
-  @Column('float')
-  @Field(()=>Float)
-  quantity:number;
-
-  @Column({nullable:true})
-  @Field(()=>String,{nullable:true})
-  quantityUnits?:string;// g,ml, kg, tsp
-
+  @ManyToOne(() => User, (usuario) => usuario.items, {
+    nullable: false,
+    lazy: true,
+  })
+  @Index('userId-index')
+  @Field(() => User)
+  user: User;
 }
